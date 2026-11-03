@@ -1,0 +1,13 @@
+{
+  "name": "clauu",
+  "version": "1.0.0",
+  "description": "Saladify Web Application",
+  "main": "server.cjs",
+  "scripts": {
+    "dev": "node server.cjs",
+    "start": "node server.cjs"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
