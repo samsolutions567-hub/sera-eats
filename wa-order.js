@@ -245,17 +245,48 @@
     return text.length <= 30 && BUTTON_RE.test(text) ? el : null;
   }
 
-  document.addEventListener('click', function (e) {
-    var btn = findButton(e.target);
-    if (!btn) return;
-    e.preventDefault();
-    e.stopImmediatePropagation();
-
+  function activate(btn) {
     var product = productFromPage() || productFromCard(btn);
     if (product) {
       openDialog(product);
     } else {
-      openWhatsApp('Hello! I would like to place an order. Could you please share today\'s menu and availability?');
+      openWhatsApp("Hello! I would like to place an order. Could you please share today's menu and availability?");
     }
-  }, true);
+  }
+
+  // On iPhones the site runs link actions when the finger lifts (a "tap"), before any click
+  // event, so we act on pointerup and then swallow the click that follows.
+  var lastTap = 0;
+  var OPTS = { capture: true, passive: false };
+
+  function stop(e) {
+    e.preventDefault();
+    e.stopImmediatePropagation();
+  }
+
+  document.addEventListener('pointerup', function (e) {
+    if (e.pointerType === 'mouse' && e.button !== 0) return;
+    var btn = findButton(e.target);
+    if (!btn) return;
+    stop(e);
+    lastTap = Date.now();
+    activate(btn);
+  }, OPTS);
+
+  // Stops the browser from turning the touch into mouse events and a click.
+  document.addEventListener('touchend', function (e) {
+    if (findButton(e.target)) e.preventDefault();
+  }, OPTS);
+
+  ['mousedown', 'mouseup', 'click'].forEach(function (type) {
+    document.addEventListener(type, function (e) {
+      if (Date.now() - lastTap < 800) { stop(e); return; }
+      if (type !== 'click') return;
+      // keyboard activation or a scripted click, with no pointer events before it
+      var btn = findButton(e.target);
+      if (!btn) return;
+      stop(e);
+      activate(btn);
+    }, OPTS);
+  });
 })();

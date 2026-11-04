@@ -17,13 +17,41 @@
 
   /* ---------- "Order From ..." goes to the products page ---------- */
 
-  document.addEventListener('click', function (e) {
-    var el = e.target && e.target.closest ? e.target.closest('a,button,[role="button"]') : null;
-    if (!el || !ORDER_FROM_RE.test(clean(el.textContent))) return;
+  function findOrderFrom(target) {
+    var el = target && target.closest ? target.closest('a,button,[role="button"]') : null;
+    return el && ORDER_FROM_RE.test(clean(el.textContent)) ? el : null;
+  }
+
+  function stop(e) {
     e.preventDefault();
     e.stopImmediatePropagation();
+  }
+
+  // On iPhones the site runs link actions when the finger lifts (a "tap"), before any click
+  // event, so we act on pointerup and then swallow the click that follows.
+  var lastTap = 0;
+  var OPTS = { capture: true, passive: false };
+
+  document.addEventListener('pointerup', function (e) {
+    if (e.pointerType === 'mouse' && e.button !== 0) return;
+    if (!findOrderFrom(e.target)) return;
+    stop(e);
+    lastTap = Date.now();
     window.location.href = MENU_URL;
-  }, true);
+  }, OPTS);
+
+  document.addEventListener('touchend', function (e) {
+    if (findOrderFrom(e.target)) e.preventDefault();
+  }, OPTS);
+
+  ['mousedown', 'mouseup', 'click'].forEach(function (type) {
+    document.addEventListener(type, function (e) {
+      if (Date.now() - lastTap < 800) { stop(e); return; }
+      if (type !== 'click' || !findOrderFrom(e.target)) return;
+      stop(e);
+      window.location.href = MENU_URL;
+    }, OPTS);
+  });
 
   /* ---------- admin dashboard icon in the nav ---------- */
 
