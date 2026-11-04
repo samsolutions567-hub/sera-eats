@@ -8,7 +8,7 @@ if (match) {
   console.log('Handover data length:', data.length);
   console.log('Includes Saladify:', data.includes('Saladify'));
   console.log('Includes saladify:', data.includes('saladify'));
-  console.log('Includes Sera Eats:', data.includes('Sera Eats'));
+  console.log('Includes DEMO.SAM:', data.includes('DEMO.SAM'));
   console.log('Includes Order From:', data.includes('Order From'));
   console.log('Includes changed the way:', data.includes('changed the way'));
 } else {

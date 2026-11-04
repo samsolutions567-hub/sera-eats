@@ -30,11 +30,11 @@ function patchContent(code) {
 
   // 1. Replace brand names
   // Notice: Some internal identifier tokens or variable names shouldn't be broken, but "Saladify" is the brand string
-  patched = patched.replace(/Saladify/g, 'Sera Eats');
-  patched = patched.replace(/saladify\.com/g, 'seraeats.com');
-  patched = patched.replace(/saladify\.framer\.website/g, 'seraeats.framer.website');
+  patched = patched.replace(/Saladify/g, 'DEMO.SAM');
+  patched = patched.replace(/saladify\.com/g, 'demosam.com');
+  patched = patched.replace(/saladify\.framer\.website/g, 'demosam.framer.website');
   // Be careful with general "saladify" in case of URLs
-  patched = patched.replace(/saladify/g, 'seraeats');
+  patched = patched.replace(/saladify/g, 'demosam');
 
   // 2. Replace phone number
   patched = patched.replace(/\+456 567 3423/g, '+91xxxxxxxxxx');
@@ -46,8 +46,8 @@ function patchContent(code) {
 
   // 4. Remove / hide email
   // Replace mailto:hello@... or mailto:... with javascript:void(0) or empty
-  patched = patched.replace(/mailto:hello@(?:saladify|seraeats)\.com/g, 'javascript:void(0)');
-  patched = patched.replace(/hello@(?:saladify|seraeats)\.com/g, '');
+  patched = patched.replace(/mailto:hello@(?:saladify|demosam)\.com/g, 'javascript:void(0)');
+  patched = patched.replace(/hello@(?:saladify|demosam)\.com/g, '');
 
   return patched;
 }

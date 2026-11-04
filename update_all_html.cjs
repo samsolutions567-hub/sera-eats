@@ -40,7 +40,7 @@ const comprehensiveCleaner = `
 (function() {
   function cleanTitle(t) {
     if (!t) return t;
-    return t.replace(/Saladify/gi, 'Sera Eats')
+    return t.replace(/Saladify/gi, 'DEMO.SAM')
             .replace(/\\s*-\\s*Food &amp; Restaurant Service Framer Template/gi, ' - Food & Restaurant Service')
             .replace(/\\s*-\\s*Food & Restaurant Service Framer Template/gi, ' - Food & Restaurant Service')
             .replace(/\\s*Framer Template/gi, '')
@@ -66,9 +66,9 @@ const comprehensiveCleaner = `
     if (node.nodeType === Node.TEXT_NODE) {
       if (node.nodeValue) {
         if (/Saladify/i.test(node.nodeValue)) {
-          node.nodeValue = node.nodeValue.replace(/Saladify/g, 'Sera Eats').replace(/saladify/g, 'seraeats');
+          node.nodeValue = node.nodeValue.replace(/Saladify/g, 'DEMO.SAM').replace(/saladify/g, 'demosam');
         }
-        if (/hello@(?:saladify|seraeats)\\.com/i.test(node.nodeValue)) {
+        if (/hello@(?:saladify|demosam)\\.com/i.test(node.nodeValue)) {
           node.nodeValue = '';
         }
         if (/\\+456\\s*567\\s*3423/.test(node.nodeValue)) {
@@ -91,7 +91,7 @@ const comprehensiveCleaner = `
         return;
       }
       if (node.tagName === 'A' && node.href && /saladify/i.test(node.href)) {
-        node.href = node.href.replace(/saladify/gi, 'seraeats');
+        node.href = node.href.replace(/saladify/gi, 'demosam');
       }
       for (let i = 0; i < node.childNodes.length; i++) {
         cleanNode(node.childNodes[i]);
@@ -145,9 +145,9 @@ files.forEach(file => {
   content = content.replace(/<style id="custom-clean-overrides">[\s\S]*?<\/script>/gi, '');
   content = content.replace('</head>', `${comprehensiveCleaner}\n</head>`);
 
-  // 3. Ensure title in static HTML has Sera Eats
+  // 3. Ensure title in static HTML has DEMO.SAM
   content = content.replace(/<title>(.*?)<\/title>/gi, (match, title) => {
-    let clean = title.replace(/Saladify/gi, 'Sera Eats');
+    let clean = title.replace(/Saladify/gi, 'DEMO.SAM');
     clean = clean.replace(/\s*-\s*Food &amp; Restaurant Service Framer Template/gi, ' - Food & Restaurant Service');
     clean = clean.replace(/\s*-\s*Food & Restaurant Service Framer Template/gi, ' - Food & Restaurant Service');
     clean = clean.replace(/\s*Framer Template/gi, '');
@@ -157,8 +157,8 @@ files.forEach(file => {
   });
 
   // 4. In case any Saladify or saladify remains anywhere in static HTML
-  content = content.replace(/Saladify/g, 'Sera Eats');
-  content = content.replace(/saladify\.com/g, 'seraeats.com');
+  content = content.replace(/Saladify/g, 'DEMO.SAM');
+  content = content.replace(/saladify\.com/g, 'demosam.com');
 
   if (content !== original) {
     fs.writeFileSync(file, content, 'utf8');

@@ -25,17 +25,17 @@ const MIME_TYPES = {
 
 function patchJs(code) {
   return code
-    .replace(/Saladify/g, 'Sera Eats')
-    .replace(/saladify\.com/g, 'seraeats.com')
-    .replace(/saladify\.framer\.website/g, 'seraeats.framer.website')
-    .replace(/saladify/g, 'seraeats')
+    .replace(/Saladify/g, 'DEMO.SAM')
+    .replace(/saladify\.com/g, 'demosam.com')
+    .replace(/saladify\.framer\.website/g, 'demosam.framer.website')
+    .replace(/saladify/g, 'demosam')
     .replace(/\+456 567 3423/g, '+91xxxxxxxxxx')
     .replace(/\+4565673423/g, '+91xxxxxxxxxx')
     .replace(/123 Greenway Street, New York, United States\./g, 'Hyderabad, India.')
     .replace(/123 Greenway Street, New York, United States/g, 'Hyderabad, India')
     .replace(/Greenway Street, New York\s*/g, 'Hyderabad, India')
-    .replace(/mailto:hello@(?:saladify|seraeats)\.com/g, 'javascript:void(0)')
-    .replace(/hello@(?:saladify|seraeats)\.com/g, '');
+    .replace(/mailto:hello@(?:saladify|demosam)\.com/g, 'javascript:void(0)')
+    .replace(/hello@(?:saladify|demosam)\.com/g, '');
 }
 
 function fetchAndCacheProxy(relativePath, res) {
@@ -168,6 +168,6 @@ server.on('error', (err) => {
 
 server.listen(PORT, '0.0.0.0', () => {
   const url = `http://localhost:${PORT}`;
-  console.log(`SERA_EATS_SERVER_STARTED: ${url}`);
+  console.log(`DEMO_SAM_SERVER_STARTED: ${url}`);
   openBrowser(url);
 });
