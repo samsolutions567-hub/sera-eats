@@ -1,0 +1,7 @@
+# Deploy as a plain static site: keep the dev server and build helpers out of the deployment
+*.cjs
+*.py
+package.json
+package-lock.json
+node_modules
+.claude
